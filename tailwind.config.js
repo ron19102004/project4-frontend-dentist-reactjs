@@ -7,8 +7,8 @@ export default {
   theme: {
   	extend: {
   		colors: {
-        my_color_primary:"",
-        my_color_secondary:"",
+			my_color_secondary:"#1abce8",
+			my_color_primary:"#116daf",
   			secondary: {
   				DEFAULT: 'hsl(var(--secondary))',
   				foreground: 'hsl(var(--secondary-foreground))'

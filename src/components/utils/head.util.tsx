@@ -7,7 +7,6 @@ export interface IHeadProps {
     urlImage: string,
     urlPageCurrent: string,
     themeColor?: string,
-    icon: string
 }
 const HeadUtil: React.FC<IHeadProps> = ({
     title,
@@ -16,11 +15,10 @@ const HeadUtil: React.FC<IHeadProps> = ({
     urlPageCurrent,
     urlImage,
     themeColor = "#ffffff",
-    icon
 }) => {
     return (
         <Helmet>
-            <title>{title}</title>
+            <title>{title} - Nha Khoa Ron</title>
             <meta charSet='UTF-8' />
             <meta name="description" content={description} />
             <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -33,8 +31,6 @@ const HeadUtil: React.FC<IHeadProps> = ({
             <meta property="og:type" content="website" />
 
             <meta name="theme-color" content={themeColor} />
-
-            <link rel="icon" href={icon} type="image/png" />
         </Helmet>
     )
 }

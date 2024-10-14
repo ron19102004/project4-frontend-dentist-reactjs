@@ -9,6 +9,10 @@ export default {
   		colors: {
 			my_color_secondary:"#1abce8",
 			my_color_primary:"#116daf",
+			my_color_bg_secondary:'#e6e6e6',
+			my_color_bg_primary:'#f0f8ff',
+			my_color_green:'#a4d3b3',
+			my_color_yellow:'#f4e04d',
   			secondary: {
   				DEFAULT: 'hsl(var(--secondary))',
   				foreground: 'hsl(var(--secondary-foreground))'

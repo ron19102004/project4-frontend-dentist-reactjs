@@ -2,8 +2,7 @@ import React, { useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import { cn } from '@/lib/cn';
 import LoopUtil from '@/components/utils/loop.util';
-import useScreen from '@/hooks/useScreen.hook';
-import useBoolean from '@/hooks/useBoolean.hook';
+import {useScreen,useBoolean} from '@/hooks';
 
 export interface INavRoute {
   title: string;
@@ -71,8 +70,8 @@ const RouteItem: React.FC<{ route: INavRoute }> = ({ route }) => {
         }}
         className={({ isActive }) =>
           cn('', {
-            'text-white': !isActive,
-            'text-my_color_secondary': isActive,
+            'text-my_color_secondary link-not-active': !isActive,
+            'text-my_color_primary font-bold': isActive,
           })
         }
       >
@@ -100,9 +99,9 @@ const RouteItem: React.FC<{ route: INavRoute }> = ({ route }) => {
                   to={item.path}
                   className={({ isActive }) =>
                     cn('hover:text-my_color_secondary', {
-                      'text-zinc-900': !isActive && !isMobile,
-                      'text-my_color_secondary': isActive,
-                      'text-white': isMobile && !isActive
+                      'text-zinc-900 link-not-active': !isActive,
+                      'text-my_color_primary': isActive,
+                      'text-my_color_secondary': !isActive && isMobile,
                     })
                   }
                 >

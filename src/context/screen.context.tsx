@@ -7,7 +7,6 @@ export const ScreenContext = createContext<IUseScreen>({
     isMobile: false
 })
 
-
 const ScreenProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     return <ScreenContext.Provider value={_useScreen()}>
         {children}

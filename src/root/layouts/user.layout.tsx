@@ -1,7 +1,6 @@
 import { Outlet } from "react-router-dom";
-import constantHelper from "../../helper/constant.helper";
 import assets from "../../assets/index.ts";
-import { Fragment, useEffect, useRef } from "react";
+import {  useEffect, useRef } from "react";
 import { cn } from "@/lib/cn.ts";
 import LoopUtil from "@/components/utils/loop.util.tsx";
 import RouteItem, { INavRoute, navLeftRoute, navRightRoute } from "@/components/nav/user/index.tsx";

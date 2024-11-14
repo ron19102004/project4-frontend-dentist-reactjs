@@ -15,7 +15,7 @@ const router: RouteObject[] = [
                 element: <h1>Dang nhap</h1>,
             },
             {
-                path:'verify-reset-password',
+                path:'reset-password/:token',
                 element: <VerifyResetPassword/>
             }
         ],

@@ -1,6 +1,6 @@
 import { Outlet } from "react-router-dom";
 import assets from "../../assets/index.ts";
-import {  useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { cn } from "@/lib/cn.ts";
 import LoopUtil from "@/components/utils/loop.util.tsx";
 import RouteItem, { INavRoute, navLeftRoute, navRightRoute } from "@/components/nav/user/index.tsx";
@@ -43,11 +43,14 @@ export default function Userlayout() {
         </button>
       </div>
       <header>
+        {/* HeaderTop FOR DESKTOP  */}
         {!isMobile && <HeaderTop autoChangeValueMap={autoChangeValueMap} />}
         <section className={cn({
           "fixed top-0 w-full z-30": isFixedNav
         })}>
+          {/* FOR MOBILE  */}
           {isMobile && <div className="lg:hidden flex justify-between items-center px-4 py-2 bg-white border-b">
+            {/* LOGO MOBILE */}
             <div className="bg-white rounded-full flex items-center">
               <a href="/">
                 <img
@@ -65,16 +68,21 @@ export default function Userlayout() {
               })}></i>
             </button>
           </div>}
+
           <nav className={cn('bg-white border-b px-4 py-4 flex flex-col lg:flex-row justify-around lg:items-center lg:px-0 gap-6', {
             'hidden': isMobile && !isOpenNav,
           })}>
+
             {isMobile && <HeaderTop autoChangeValueMap={autoChangeValueMap} />}
+            {/* LIST LINK LEFT  */}
             <ul className='flex flex-col lg:flex-row justify-around lg:items-center gap-6'>
               <LoopUtil
                 data={navLeftRoute}
                 render={(route: INavRoute) => <RouteItem route={route} />}
               />
             </ul>
+
+            {/* LOGO ICONIC  */}
             <section className={cn("hidden absolute bg-white lg:flex flex-col justify-center items-center left-[50%] -translate-x-[50%] shadow-2xl z-30 border", {
               'w-24 h-24 rounded-3xl': !isFixedNav,
               'w-14 h-14 rounded-full': isFixedNav
@@ -90,6 +98,8 @@ export default function Userlayout() {
                 />
               </a>
             </section>
+            
+            {/* LIST LINK RIGHT  */}
             <ul className='flex flex-col lg:flex-row justify-around lg:items-center gap-6'>
               <LoopUtil
                 data={navRightRoute}

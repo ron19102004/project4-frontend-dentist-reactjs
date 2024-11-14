@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import React, {  useState } from 'react';
+import { Link, useParams } from 'react-router-dom';
 import ForbiddenPage from "@/root/pages/errors/forbidden.tsx";
 import { useAuth, useBoolean } from "@/hooks";
 import { useQuery } from 'react-query';
@@ -8,9 +8,7 @@ import { IResponseLayout } from '@/apis/models';
 const VerifyResetPassword: React.FC = () => {
     const { value: success, setValue: setSuccess } = useBoolean()
     const [message, setMessage] = useState<string | null>(null);
-    const location = useLocation();
-    const queryParams = new URLSearchParams(location.search);
-    const token: string | null = queryParams.get('token')
+    let { token } = useParams();
     const { verifyResetPassword } = useAuth()
     if (!token) {
         return <ForbiddenPage />;
@@ -33,7 +31,7 @@ const VerifyResetPassword: React.FC = () => {
 
     if (isLoading) {
         return (
-            <div className="flex items-center justify-center min-h-screen bg-gray-100 p-4">
+            <div className="flex items-center justify-center min-h-screen bg-gray-50 p-4">
                 <div className="flex flex-col items-center">
                     <div
                         className="animate-spin rounded-full h-24 w-24 border-8 border-t-8 border-t-blue-500 border-solid bg-transparent shadow-lg"></div>
@@ -58,7 +56,7 @@ const VerifyResetPassword: React.FC = () => {
         );
     }
     return (
-        <div className="flex flex-col items-center justify-center min-h-screen bg-gray-200 p-6">
+        <div className="flex flex-col items-center justify-center min-h-screen bg-gray-50 p-6">
             <div
                 className={`bg-white shadow-lg rounded-xl p-8 max-w-md w-full transition-transform transform hover:scale-105 ${success ? 'border-l-4 border-green-500' : 'border-l-4 border-red-500'}`}>
                 <h1 className={`text-3xl font-semibold text-center mb-4 ${success ? 'text-green-600' : 'text-red-600'}`}>

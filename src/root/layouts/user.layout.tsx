@@ -16,6 +16,7 @@ export default function Userlayout() {
 
   const topRef = useRef<HTMLDivElement | null>(null);
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const scrollHandler = (_: Event) => {
     setValueFixedNav(window.scrollY > 100)
   }

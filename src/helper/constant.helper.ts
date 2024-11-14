@@ -5,9 +5,11 @@ const addressCurrent:string = "Ngu Hanh Son, Da Nang"
 const phoneSystem:string ='0392477615'
 const dateOpen:string ='Thứ Hai - Thứ Bảy'
 const timeOpen:string ='8.AM - 8.PM'
+const url:string ='http://localhost:8080/api'
 export default{
     addressCurrent,
     phoneSystem,
     dateOpen,
-    timeOpen
+    timeOpen,
+    url,
 }

@@ -7,6 +7,7 @@ import LogoSys from './logo-sys.png'
 import LogoSysRmBg from './logo-sys-rmbg.png'
 import BannerHome from './banner-home.png'
 import BSStoneHome from './bac-si-nha-khoa-stone.png'
+import BannerAppointment from './gpo-bac-si-nha-khoa-nha-si-1.jpg'
 export default {
     AppIcon,
     PhoneIcon,
@@ -16,5 +17,6 @@ export default {
     LogoSys,
     LogoSysRmBg,
     BannerHome,
-    BSStoneHome
+    BSStoneHome,
+    BannerAppointment
 }

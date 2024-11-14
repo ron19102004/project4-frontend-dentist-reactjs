@@ -9,6 +9,8 @@ export interface INavRoute {
   path: string;
   children?: INavRoute[];
 }
+
+// eslint-disable-next-line react-refresh/only-export-components
 export const navLeftRoute: INavRoute[] = [
   {
     title: 'Trang chủ',
@@ -39,6 +41,7 @@ export const navLeftRoute: INavRoute[] = [
     ]
   }
 ]
+// eslint-disable-next-line react-refresh/only-export-components
 export const navRightRoute: INavRoute[] = [
   {
     title: 'Đội ngũ chuyên gia',
@@ -57,6 +60,7 @@ export const navRightRoute: INavRoute[] = [
 const RouteItem: React.FC<{ route: INavRoute }> = ({ route }) => {
   const { isMobile } = useScreen()
   const { value: isOpen, autoChange } = useBoolean()
+  // eslint-disable-next-line @typescript-eslint/no-unused-expressions
   useEffect(() => { }), [isMobile]
   return (
     <section className="uppercase font-semibold group relative">

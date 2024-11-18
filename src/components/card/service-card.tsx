@@ -4,10 +4,10 @@ import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
-import { Service } from "@/root/pages/user/home/interface";
 import { cn } from "@/lib/cn";
 import ScrollDialog from "../ui/scroll-dialog";
 import assets from "@/assets";
+import { Service } from "@/apis/models";
 
 const ServiceCard: React.FC<Service> = ({
   id,

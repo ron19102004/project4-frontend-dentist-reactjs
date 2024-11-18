@@ -1,4 +1,4 @@
-import {createBrowserRouter, RouterProvider, useLocation} from "react-router-dom";
+import {createBrowserRouter, RouterProvider} from "react-router-dom";
 import userRoutes from "./user";
 import authRoutes from "./auth";
 

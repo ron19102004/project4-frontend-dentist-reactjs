@@ -3,7 +3,7 @@ import assets from "../../assets/index.ts";
 import { useEffect, useRef } from "react";
 import { cn } from "@/lib/cn.ts";
 import LoopUtil from "@/components/utils/loop.util.tsx";
-import RouteItem, { INavRoute, navLeftRoute, navRightRoute } from "@/components/nav/user/index.tsx";
+import RouteItem, { INavRoute, navLeftRoute, navRightRoute,loginRoute } from "@/components/nav/user/index.tsx";
 import { ChatBot, GoogleMap, LoadingLine } from "@/components/ui";
 import { useBoolean, useScreen } from "@/hooks";
 import HeaderTop from "@/components/nav/user/header-top.tsx";
@@ -81,6 +81,7 @@ export default function Userlayout() {
                 data={navLeftRoute}
                 render={(route: INavRoute) => <RouteItem route={route} />}
               />
+              <RouteItem route={loginRoute}/>
             </ul>
 
             {/* LOGO ICONIC  */}

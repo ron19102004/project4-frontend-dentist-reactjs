@@ -5,15 +5,14 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-import { Service } from "@/root/pages/user/home/interface";
 import { useCallback, useEffect, useState } from "react";
-import { HomeControllerUser } from "@/root/pages/user/home/home.controller";
 import { cn } from "@/lib/cn";
 import FormatText from "@/components/ui/format-text";
 import assets from "@/assets";
 import LoadingLine from "./loadline.ui";
 import theme from "@/helper/theme";
 import { CssBaseline, ThemeProvider } from "@mui/material";
+import { Service } from "@/apis/models";
 
 interface ScrollDialogProps {
   isOpen: boolean;
@@ -28,8 +27,8 @@ const ScrollDialog: React.FC<ScrollDialogProps> = ({ isOpen, id }) => {
 
   const fetchServiceDetail = useCallback(async () => {
     try {
-      const newService = await HomeControllerUser.getServiceDetail(id);
-      setServiceDetail(newService);
+      // const newService = await HomeControllerUser.getServiceDetail(id);
+      // setServiceDetail(newService);
     } catch (error) {
       console.error("Error fetching service:", error);
     }

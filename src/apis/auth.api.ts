@@ -13,7 +13,9 @@ async function verifyResetPassword(token: string): Promise<IResponseLayout<null>
        return e.response.data;
    }
 }
-
+async function login(){
+    
+}
 export default {
     verifyResetPassword
 }

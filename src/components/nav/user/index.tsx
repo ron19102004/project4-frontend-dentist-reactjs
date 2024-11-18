@@ -9,7 +9,10 @@ export interface INavRoute {
   path: string;
   children?: INavRoute[];
 }
-
+export const loginRoute: INavRoute = {
+  title: 'Đăng nhập',
+  path: '/dang-nhap'
+}
 // eslint-disable-next-line react-refresh/only-export-components
 export const navLeftRoute: INavRoute[] = [
   {
@@ -19,12 +22,6 @@ export const navLeftRoute: INavRoute[] = [
   {
     title: 'Dịch vụ',
     path: '/d',
-    children: [
-      {
-        title: 'Nhổ răng khôn',
-        path: '/d/2'
-      }
-    ]
   },
   {
     title: 'Bảng giá dịch vụ',

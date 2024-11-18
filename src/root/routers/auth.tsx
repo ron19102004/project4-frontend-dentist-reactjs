@@ -1,21 +1,18 @@
-import {Navigate, Outlet, RouteObject} from "react-router-dom";
+import {Outlet, RouteObject} from "react-router-dom";
 import VerifyResetPassword from "@/root/pages/auth/verify-reset-password.tsx";
+import LoginPage from "../pages/auth/login";
 
 const router: RouteObject[] = [
     {
-        path: "/auth",
+        path: "/",
         element: <Outlet/>,
         children: [
             {
-                path: "",
-                element: <Navigate to={'dang-nhap'} />,
-            },
-            {
                 path: 'dang-nhap',
-                element: <h1>Dang nhap</h1>,
+                element: <LoginPage/>,
             },
             {
-                path:'reset-password/:token',
+                path:'auth/reset-password/:token',
                 element: <VerifyResetPassword/>
             }
         ],

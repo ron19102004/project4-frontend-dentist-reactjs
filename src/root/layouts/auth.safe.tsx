@@ -3,10 +3,11 @@ import {useAuth} from "@/hooks";
 import ForbiddenPage from "@/root/pages/errors/forbidden.tsx";
 import {FC, useEffect} from "react";
 import {CircularProgress} from '@mui/material';
+import {Role} from "@/apis/models";
 
 const AuthSafe: FC<{
-    excludeRoles?: string[],
-    includeRoles?: string[]
+    excludeRoles?: Role[],
+    includeRoles?: Role[]
 }> = ({excludeRoles,includeRoles}) => {
     const {isAuthenticated, role, isUserFetching} = useAuth()!;
     const navigate = useNavigate()

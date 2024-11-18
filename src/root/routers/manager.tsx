@@ -4,21 +4,23 @@ import ManagerLayout from "@/root/layouts/manager.layout.tsx";
 import DashboardAdminPage from "@/root/pages/manager/admin/dashboard.tsx";
 import {useAuth} from "@/hooks";
 import AccountantServicePage from "@/root/pages/manager/accountant/service/page.tsx";
+import {Role} from "@/apis/models.d";
+import AccountantInvoicePage from "@/root/pages/manager/accountant/invoice/page.tsx";
 
 // eslint-disable-next-line react-refresh/only-export-components
 const CheckDashBoard = () => {
     const {role} = useAuth()!
-    if (role === "ADMIN") {
+    if (role === Role.ADMIN) {
         return <Navigate to={"admin/trang-chu"}/>
     }
-    if (role === "ACCOUNTANT") {
+    if (role === Role.ACCOUNTANT) {
         return <Navigate to={"accountant/trang-chu"}/>
     }
     return <Navigate to={"dentist/trang-chu"}/>
 }
 const adminRouter: RouteObject = {
     path: "admin",
-    element: <AuthSafe includeRoles={["ADMIN"]}/>,
+    element: <AuthSafe includeRoles={[Role.ADMIN]}/>,
     children: [
         {
             path: "",
@@ -44,7 +46,7 @@ const adminRouter: RouteObject = {
 };
 const accountantRouter: RouteObject = {
     path: "accountant",
-    element: <AuthSafe includeRoles={["ACCOUNTANT"]}/>,
+    element: <AuthSafe includeRoles={[Role.ACCOUNTANT]}/>,
     children: [
         {
             path: "",
@@ -68,13 +70,13 @@ const accountantRouter: RouteObject = {
         },
         {
             path: "hoa-don",
-            element: <h1>hoa-don</h1>
+            element: <AccountantInvoicePage/>
         }
     ]
 }
 const dentistRouter: RouteObject = {
     path: "dentist",
-    element: <AuthSafe includeRoles={["DENTIST"]}/>,
+    element: <AuthSafe includeRoles={[Role.DENTIST]}/>,
     children: [
         {
             path: "",
@@ -101,7 +103,7 @@ const dentistRouter: RouteObject = {
 const router: RouteObject[] = [
     {
         path: "/quan-ly",
-        element: <AuthSafe excludeRoles={["PATIENT"]}/>,
+        element: <AuthSafe excludeRoles={[Role.PATIENT]}/>,
         children: [
             {
                 path: "",

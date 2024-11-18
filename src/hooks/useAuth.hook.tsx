@@ -1,4 +1,4 @@
-import {IResponseLayout, User} from "@/apis/models";
+import {IResponseLayout, Role, User} from "@/apis/models.d";
 import authApi, {ILoginResponse} from "@/apis/auth.api.ts";
 import userApi from "@/apis/user.api.ts";
 import useBoolean from "@/hooks/useBoolean.hook.tsx";
@@ -9,7 +9,7 @@ import {AuthContext} from "@/context/auth.context.tsx";
 export interface IUseAuth {
     isAuthenticated: boolean;
     userCurrent: User | null;
-    role: string,
+    role: Role,
     isUserFetching: boolean;
     accessToken:string
 
@@ -26,7 +26,7 @@ export const _useAuth = (): IUseAuth => {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const [userCurrent, setUserCurrent] = useState<User | null>(null);
     // eslint-disable-next-line react-hooks/rules-of-hooks
-    const [role, setRole] = useState<string>("")
+    const [role, setRole] = useState<Role>(Role.PATIENT)
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const [accessToken, setToken] = useState<string>("")
     const verifyResetPassword = async (token: string): Promise<IResponseLayout<null>> => {

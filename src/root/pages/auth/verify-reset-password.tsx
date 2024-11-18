@@ -9,7 +9,7 @@ const VerifyResetPassword: React.FC = () => {
     const { value: success, setValue: setSuccess } = useBoolean()
     const [message, setMessage] = useState<string | null>(null);
     let { token } = useParams();
-    const { verifyResetPassword } = useAuth()
+    const { verifyResetPassword } = useAuth()!
     if (!token) {
         return <ForbiddenPage />;
     }

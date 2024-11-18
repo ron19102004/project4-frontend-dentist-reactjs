@@ -1,3 +1,5 @@
+import {InvoiceStatus} from "@/apis/invoice.api.tsx";
+
 export interface IResponseLayout<D> {
     success: boolean;
     message: string;
@@ -23,10 +25,19 @@ export interface RewardPoint {
     "pointsUsed": number,
     "lastUpdatedAt": string
 }
-export enum Gender{
-    MALE,
-    FEMALE
+
+export enum Gender {
+    MALE = "MALE",
+    FEMALE = "FEMALE",
 }
+
+export enum Role {
+    DENTIST = "DENTIST",
+    ADMIN = "ADMIN",
+    PATIENT = "PATIENT",
+    ACCOUNTANT = "ACCOUNTANT",
+}
+
 export interface User extends Entity {
     "createdAt": string,
     "username": string,
@@ -34,8 +45,54 @@ export interface User extends Entity {
     "gender": Gender,
     "phoneNumber": string,
     "address": string,
-    "email":string,
+    "email": string,
     "activeTwoFactorAuthentication": boolean
-    "rewardPoint":RewardPoint,
-    "role":string
+    "rewardPoint": RewardPoint,
+    "role": Role
+}
+
+export interface Payment extends Entity {
+    "id": number,
+    "paymentDate": string | null,
+    "amountPaid": number,
+    "paymentType": "CASH",
+    "discountPercent": number | null
+}
+
+export interface RewardHistory extends Entity {
+    "createdAt": string,
+    "pointsUsed": number,
+    "content": string
+}
+
+export interface InvoiceService extends Entity {
+    "createdAt": string,
+    "priceServiceCurrent": number,
+    "nameServiceCurrent": string,
+    "pointRewardCurrent": number
+}
+
+export interface Accountant extends Entity {
+    "email": string,
+    "phoneNumber": string,
+    "createdAt": string
+}
+
+export enum InvoiceStatus {
+    PENDING = "PENDING",
+    PAID = "PAID",
+    CANCELLED = "CANCELLED",
+}
+
+export interface InvoiceForAccountant {
+    "appointmentId": number,
+    "rewardHistory": RewardHistory | null,
+    "payment": Payment,
+    "invoiceServiceList": InvoiceService[],
+    "amountOriginPaid": number,
+    "accountant": Accountant | null,
+    "patientName": string,
+    "invoiceStatus": InvoiceStatus,
+    "createdAt": string,
+    "updatedAt": string | null
 }

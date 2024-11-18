@@ -8,7 +8,7 @@ import {Link} from "react-router-dom";
 import useService from "@/hooks/useService.hook.tsx";
 
 const HomeUserPage: FC = () => {
-    const {list: services} = useService();
+    const {list: services} = useService()!;
     return (
         <Fragment>
             <HeadUtil

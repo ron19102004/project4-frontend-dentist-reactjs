@@ -13,7 +13,7 @@ export interface FindAllByInvoiceStatusResponse {
 
 async function findAllByInvoiceStatus(status: InvoiceStatus, pageNumber: number, token: string):
     Promise<IResponseLayout<FindAllByInvoiceStatusResponse>> {
-    const URL = INVOICE_URL_BASE + `/all/${pageNumber}/${status}`;
+    const URL = INVOICE_URL_BASE + `/all?pageNumber=${pageNumber}&status=${status}`;
     const res = await axios.get<IResponseLayout<FindAllByInvoiceStatusResponse>>(URL, {
         headers: {
             Authorization: `Bearer ${token}`,
@@ -22,6 +22,19 @@ async function findAllByInvoiceStatus(status: InvoiceStatus, pageNumber: number,
     return res.data;
 }
 
+async function findAllByAppointmentIdInvoiceStatus(status: InvoiceStatus, pageNumber: number,appointmentId:number, token: string):
+    Promise<IResponseLayout<FindAllByInvoiceStatusResponse>> {
+    const URL = INVOICE_URL_BASE + `/all?pageNumber=${pageNumber}&status=${status}&appointmentId=${appointmentId}`;
+    const res = await axios.get<IResponseLayout<FindAllByInvoiceStatusResponse>>(URL, {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        }
+    });
+    return res.data;
+}
+
+
 export default {
-    findAllByInvoiceStatus
+    findAllByInvoiceStatus,
+    findAllByAppointmentIdInvoiceStatus
 }

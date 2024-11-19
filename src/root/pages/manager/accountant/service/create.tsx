@@ -13,6 +13,7 @@ export interface CreateServiceFormData {
     price: number;
     description: string;
     pointReward: number;
+    poster:string;
 }
 
 interface ICreateServiceDialogProps {
@@ -23,12 +24,13 @@ interface ICreateServiceDialogProps {
 const CreateServiceDialog: FC<ICreateServiceDialogProps> = ({isOpen, setOpen}) => {
     const {newService} = useService()!;
     const {accessToken} = useAuth()!
-    const {register, handleSubmit, formState: {errors}} = useForm<CreateServiceFormData>();
+    const {register, handleSubmit, formState: {errors},reset} = useForm<CreateServiceFormData>();
 
     const onSubmit: SubmitHandler<CreateServiceFormData> = async (data) => {
         await newService(data, accessToken, () => {
             toast.success("Thêm dịch vụ thành công")
             setOpen(false)
+            reset()
         }, (message) => {
             toast.error(message)
         })
@@ -94,6 +96,22 @@ const CreateServiceDialog: FC<ICreateServiceDialogProps> = ({isOpen, setOpen}) =
                             />
                             {errors.description && (
                                 <span className="text-red-500 text-sm">{errors.description.message}</span>
+                            )}
+                        </div>
+
+                        <div className="col-span-2 md:col-span-1">
+                            <label htmlFor="poster" className="block text-sm font-medium text-gray-700">
+                                Đường dẫn hình ảnh
+                            </label>
+                            <input
+                                placeholder={"https://drive.google.com/file/d/1ojlIQ1R8e6LY1K09ogo4lOQ255vfuCP9/view?usp=drive_link"}
+                                type="text"
+                                id="poster"
+                                {...register('poster', {required: 'Yêu cầu đường dẫn'})}
+                                className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                            />
+                            {errors.poster && (
+                                <span className="text-red-500 text-sm">{errors.poster.message}</span>
                             )}
                         </div>
 

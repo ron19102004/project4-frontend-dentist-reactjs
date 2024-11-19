@@ -96,3 +96,43 @@ export interface InvoiceForAccountant {
     "createdAt": string,
     "updatedAt": string | null
 }
+
+export interface Reward {
+    "id": number,
+    "createdAt": string,
+    "points": number,
+    "content": string,
+    "poster": string | null,
+    "isOpened": boolean
+}
+
+export interface Specialize extends Entity {
+    "createdAt": string,
+    "name": string,
+    "slug": string,
+    "description": string
+}
+
+export interface Dentist extends Entity {
+    "email": string,
+    "phoneNumber": string,
+    "createdAt": string,
+    "description": string,
+    "specialize": Specialize
+}
+
+export interface Accountant extends Entity {
+    "email": string,
+    "phoneNumber": string,
+    "createdAt": string
+}
+
+export interface UserDetailsForAdmin extends Entity {
+    "username": string,
+    "role": Role,
+    "fullName": string,
+    "dentist": Dentist | null,
+    "accountant": Accountant | null,
+    "email": string,
+    "phone":string
+}

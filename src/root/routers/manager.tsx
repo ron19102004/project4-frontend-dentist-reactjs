@@ -6,6 +6,9 @@ import {useAuth} from "@/hooks";
 import AccountantServicePage from "@/root/pages/manager/accountant/service/page.tsx";
 import {Role} from "@/apis/models.d";
 import AccountantInvoicePage from "@/root/pages/manager/accountant/invoice/page.tsx";
+import AccountantRewardPage from "@/root/pages/manager/accountant/reward/page.tsx";
+import AdminSpecializePage from "@/root/pages/manager/admin/specialize/page.tsx";
+import AdminAccountPage from "@/root/pages/manager/admin/account/page.tsx";
 
 // eslint-disable-next-line react-refresh/only-export-components
 const CheckDashBoard = () => {
@@ -36,11 +39,11 @@ const adminRouter: RouteObject = {
         },
         {
             path: "chuyen-nganh",
-            element: <h1>chuyen-nganh</h1>
+            element: <AdminSpecializePage/>
         },
         {
             path: "tai-khoan",
-            element: <h1>tai-khoan</h1>
+            element: <AdminAccountPage/>
         }
     ]
 };
@@ -66,7 +69,7 @@ const accountantRouter: RouteObject = {
         },
         {
             path: "phan-qua",
-            element: <h1>phan-qua</h1>
+            element: <AccountantRewardPage/>
         },
         {
             path: "hoa-don",

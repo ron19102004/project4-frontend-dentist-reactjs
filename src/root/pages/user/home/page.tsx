@@ -61,7 +61,9 @@ const HomeUserPage: FC = () => {
                                     name={service.name}
                                     description={service.description}
                                     price={service.price}
-                                    poster={service.poster}
+                                    poster={service.poster} createdAt={"2024-11-18T10:44:36.978Z"}
+                                    slug={"string"}
+                                    pointReward={0}
                                 />
                             ))}
                         </div>

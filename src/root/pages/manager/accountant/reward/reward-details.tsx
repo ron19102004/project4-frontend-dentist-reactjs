@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {FC} from 'react';
+import {FC, useEffect} from 'react';
 import Dialog from '@mui/material/Dialog';
 import {Reward} from "@/apis/models.d";
 import {useBoolean} from "@/hooks";
@@ -15,7 +15,9 @@ const RewardDetailsDialog: FC<IRewardDetailsDialogProps> = ({isOpen, setOpen, re
     const handleClose = () => {
         setOpen(false);
     };
-
+    useEffect(() => {
+        setOpenEdit(false)
+    }, [isOpen]);
     return (
         <React.Fragment>
             <Dialog

@@ -1,6 +1,6 @@
 import {URL_API_BASE} from "@/helper/constant.helper.ts";
 import axios from "axios";
-import {IResponseLayout, User} from "@/apis/models";
+import {Gender, IResponseLayout, User} from "@/apis/models";
 
 const AUTH_URL_BASE: string = URL_API_BASE + "/api/auth/v1";
 
@@ -29,7 +29,24 @@ async function login(username: string, password: string): Promise<IResponseLayou
     return response.data
 }
 
+export interface IRegisterRequest {
+    username: string;
+    password: string;
+    fullName: string;
+    gender: Gender;
+    phoneNumber: string;
+    address: string;
+    email: string;
+}
+
+async function register(body: IRegisterRequest): Promise<IResponseLayout<User>> {
+    const URL = AUTH_URL_BASE + "/register"
+    const res = await axios.post<IResponseLayout<User>>(URL, body)
+    return res.data
+}
+
 export default {
     verifyResetPassword,
-    login
+    login,
+    register
 }

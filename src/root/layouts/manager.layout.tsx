@@ -1,5 +1,5 @@
 import {useAuth, useBoolean} from "@/hooks";
-import {NavLink, Outlet} from "react-router-dom";
+import {NavLink, Outlet, useNavigate} from "react-router-dom";
 import {INavRoute} from "@/components/nav/user";
 import LoopUtil from "../../components/utils/loop.util.tsx";
 import {useEffect} from "react";
@@ -8,7 +8,12 @@ import {cn} from "@/lib/cn.ts";
 
 export default function ManagerLayout() {
     const {value: isSidebarOpen, setValue: setSidebarOpen} = useBoolean()
-    const {role, isAuthenticated} = useAuth()!;
+    const {role, isAuthenticated,logout} = useAuth()!;
+    const navigate = useNavigate();
+    const logoutHandler = () =>{
+        logout()
+        navigate("/")
+    }
     const managersRoutes = (): INavRoute[] => {
         if (!isAuthenticated) {
             return []
@@ -83,8 +88,8 @@ export default function ManagerLayout() {
                     </ul>
                 </nav>
                 <div className="p-4">
-                    <button className="w-full py-4 bg-gray-700 hover:bg-blue-700 rounded">
-                        Logout
+                    <button onClick={logoutHandler} className="w-full py-4 bg-gray-700 hover:bg-blue-700 rounded">
+                        Đăng xuất
                     </button>
                 </div>
             </aside>

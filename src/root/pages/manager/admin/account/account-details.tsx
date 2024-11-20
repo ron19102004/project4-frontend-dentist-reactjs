@@ -21,7 +21,8 @@ const AccountDetailsDialog: FC<IAccountDetailsDialogProps> = ({isOpen, setOpen, 
                 onClose={handleClose}
             >
                 <div
-                    className="max-w-lg w-full bg-white rounded-lg shadow-lg p-6 space-y-6 transition-all duration-200 hover:shadow-xl mx-auto md:max-w-2xl lg:max-w-4xl xl:max-w-5xl">
+                    className="max-w-lg w-full bg-white rounded-lg shadow-lg p-6 space-y-6 transition-all
+                    duration-200 hover:shadow-xl mx-auto md:max-w-2xl lg:max-w-6xl">
                     <div
                         className="flex flex-col md:flex-row justify-between items-start md:items-center border-b pb-4 space-y-4 md:space-y-0">
                         <h2 className="text-2xl font-bold text-gray-900">{user.fullName}</h2>
@@ -34,8 +35,8 @@ const AccountDetailsDialog: FC<IAccountDetailsDialogProps> = ({isOpen, setOpen, 
                                         : 'bg-yellow-200 text-yellow-700'
                             }`}
                         >
-            {user.role}
-        </span>
+                            {user.role}
+                        </span>
                     </div>
 
                     {/* Common Info */}
@@ -83,19 +84,24 @@ const AccountDetailsDialog: FC<IAccountDetailsDialogProps> = ({isOpen, setOpen, 
                                     </div>
                                 </div>
                                 <div className="flex items-center">
-                                    <i className="fas fa-info-circle text-gray-500 w-6"></i>
-                                    <div className="ml-3">
-                                        <p className="text-sm text-gray-500">Description</p>
-                                        <p className="text-lg font-medium text-gray-800 break-all">{user.dentist.description}</p>
-                                    </div>
-                                </div>
-                                <div className="flex items-center">
                                     <i className="fas fa-tooth text-gray-500 w-6"></i>
                                     <div className="ml-3">
                                         <p className="text-sm text-gray-500">Specialize</p>
                                         <p className="text-lg font-medium text-gray-800 break-all">{user.dentist.specialize.name}</p>
                                     </div>
                                 </div>
+                                <div className="flex items-center w-full">
+                                    <i className="fas fa-info-circle text-gray-500 w-6"></i>
+                                    <div className="flex-1 w-full">
+                                        <p className="text-sm text-gray-500">Description</p>
+                                        <p className="text-gray-800 w-full">
+                                            <textarea className={"w-full p-2 rounded h-28"} disabled={true}>
+                                                {user.dentist.description}
+                                            </textarea>
+                                        </p>
+                                    </div>
+                                </div>
+
                             </div>
                         </div>
                     )}

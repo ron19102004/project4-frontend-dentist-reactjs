@@ -1,5 +1,5 @@
 import {IResponseLayout, Role, User} from "@/apis/models.d";
-import authApi, {ILoginResponse} from "@/apis/auth.api.ts";
+import authApi, {ILoginResponse, IRegisterRequest} from "@/apis/auth.api.ts";
 import userApi from "@/apis/user.api.ts";
 import useBoolean from "@/hooks/useBoolean.hook.tsx";
 import {useContext, useEffect, useState} from "react";
@@ -11,13 +11,15 @@ export interface IUseAuth {
     userCurrent: User | null;
     role: Role,
     isUserFetching: boolean;
-    accessToken:string
+    accessToken: string
 
     verifyResetPassword(token: string): Promise<IResponseLayout<null>>
 
     login(username: string, password: string): Promise<IResponseLayout<ILoginResponse>>
-}
 
+    logout: () => void;
+    register: (data: IRegisterRequest, success: () => void, error: (message: string) => void) => Promise<void>
+}
 export const _useAuth = (): IUseAuth => {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const {value: isAuthenticated, setValue: setIsAuth} = useBoolean(false)
@@ -31,6 +33,23 @@ export const _useAuth = (): IUseAuth => {
     const [accessToken, setToken] = useState<string>("")
     const verifyResetPassword = async (token: string): Promise<IResponseLayout<null>> => {
         return await authApi.verifyResetPassword(token);
+    }
+    const register = async (
+        data: IRegisterRequest,
+        success: () => void,
+        error: (message: string) => void) => {
+        try {
+            const res = await authApi.register(data)
+            if (res.success) {
+                success();
+                return
+            }
+            error(res.message)
+        } catch (e){
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-expect-error
+            error(e?.response.data.message)
+        }
     }
     const login = async (username: string, password: string): Promise<IResponseLayout<ILoginResponse>> => {
         const data = await authApi.login(username, password);
@@ -63,10 +82,17 @@ export const _useAuth = (): IUseAuth => {
             setUserFetching(false)
         }
     }
+    const logout = () => {
+        Cookies.remove("access-token")
+        Cookies.remove("refresh-token")
+        setIsAuth(false)
+        setUserCurrent(null)
+        setToken("")
+    }
     // eslint-disable-next-line react-hooks/rules-of-hooks
     useEffect(() => {
-        getMyInfo().then(_ => {
-        })
+        getMyInfo().then()
+
     }, [])
     return {
         isAuthenticated,
@@ -75,7 +101,9 @@ export const _useAuth = (): IUseAuth => {
         isUserFetching,
         accessToken,
         verifyResetPassword,
-        login
+        login,
+        logout,
+        register
     }
 }
 const useAuth = () => useContext(AuthContext)

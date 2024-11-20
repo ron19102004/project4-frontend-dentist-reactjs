@@ -117,6 +117,7 @@ const AccountantServicePage = () => {
                         <th className="border border-gray-200 px-4 py-2 text-left">ID</th>
                         <th className="border border-gray-200 px-4 py-2 text-left">Tên</th>
                         <th className="border border-gray-200 px-4 py-2 text-left">Giá</th>
+                        <th className="border border-gray-200 px-4 py-2 text-left">Điểm tích lũy</th>
                         <th className="border border-gray-200 px-4 py-2 text-left">Mô tả</th>
                         <th className="border border-gray-200 px-4 py-2 text-left">Ảnh</th>
                         <th className="border border-gray-200 px-4 py-2 text-left">Hành động</th>
@@ -129,13 +130,19 @@ const AccountantServicePage = () => {
                             return <tr className="hover:bg-gray-50 shadow">
                                 <td className="border border-gray-200 px-4 py-2">{service.id}</td>
                                 <td className="border border-gray-200 px-4 py-2">{service.name}</td>
-                                <td className="border border-gray-200 px-4 py-2">{service.price}</td>
-                                <td className="border border-gray-200 px-4 py-2">{service.description}</td>
-                                <td className="border border-gray-200 px-4 py-2 flex flex-col justify-center items-center">
+                                <td className="border border-gray-200 px-4 py-2 text-center">{service.price}</td>
+                                <td className="border border-gray-200 px-4 py-2 text-center">{service.pointReward}</td>
+                                <td className="border border-gray-200">
+                                     <textarea cols={50} className={"w-full p-4 rounded-xl w-96 h-28 outline-none"}
+                                               disabled={true}>
+                                        {service.description}
+                                    </textarea>
+                                </td>
+                                <td className=" flex flex-col justify-center items-center">
                                     <img
                                         src={(service.poster && service.poster.length > 0) ? service.poster : "https://via.placeholder.com/50"}
                                         alt="Poster"
-                                        className="w-12 h-12 object-cover rounded-md"/>
+                                        className="w-20 h-20 object-cover rounded-md"/>
                                 </td>
                                 <td className="border border-gray-200 px-4 py-2">
                                     <button

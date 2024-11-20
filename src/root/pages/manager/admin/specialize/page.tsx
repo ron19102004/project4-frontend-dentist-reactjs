@@ -40,7 +40,7 @@ const AdminSpecializePage: FC = () => {
             urlImage={""}
             urlPageCurrent={""}
         />
-        <section className={"max-w-screen px-4 pt-2"}>
+        <section className={"max-w-screen px-4 pt-2 py-6"}>
             <div className="flex items-center justify-between py-4 text-white">
                 <div className="flex items-center md:justify-between md:space-x-4 w-full gap-2">
                     <div className={"flex flex-row gap-2 w-full"}>
@@ -98,13 +98,18 @@ const AdminSpecializePage: FC = () => {
                                 </td>
                                 <td className="border border-gray-200 px-4 py-2">{specialize.name}</td>
                                 <td className="border border-gray-200 px-4 py-2">{specialize.slug}</td>
-                                <td className="border border-gray-200 px-4 py-2">
-                                    {specialize.description}
+                                <td className="border border-gray-200">
+                                    <textarea cols={50} className={"w-full p-4 rounded-xl w-96 h-28 outline-none"} disabled={true}>
+                                        {specialize.description}
+                                    </textarea>
                                 </td>
                                 <td className="border border-gray-200 px-4 py-2">{specialize.createdAt}</td>
-                                <td className="border border-gray-200 px-4 py-2 flex flex-col md:flex-row items-center w-full gap-2">
+                                <td className="px-4 py-2 flex flex-col justify-center items-center gap-2">
                                     <button
-                                        onClick={()=>{setSpecializeEdit(specialize);setIsOpenEdit(true)}}
+                                        onClick={() => {
+                                            setSpecializeEdit(specialize);
+                                            setIsOpenEdit(true)
+                                        }}
                                         className=" w-full  rounded-md bg-blue-600 hover:bg-blue-700 py-2 px-4 border border-transparent text-center
                                         text-sm text-white transition-all shadow-md hover:shadow-lg"
                                         type="button">
@@ -128,7 +133,8 @@ const AdminSpecializePage: FC = () => {
             </div>
         </section>
         <CreateSpecializeDialog isOpen={isOpenCreate} setOpen={setIsOpenCreate}/>
-        {specializeEdit && <UpdateSpecializeDialog isOpen={isOpenEdit} setOpen={setIsOpenEdit} specialize={specializeEdit}/>}
+        {specializeEdit &&
+            <UpdateSpecializeDialog isOpen={isOpenEdit} setOpen={setIsOpenEdit} specialize={specializeEdit}/>}
     </Fragment>
 }
 export default AdminSpecializePage

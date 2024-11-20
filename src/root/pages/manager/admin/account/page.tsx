@@ -11,13 +11,13 @@ import CreateAccountHasRoleDialog from "@/root/pages/manager/admin/account/creat
 
 const AdminAccountPage: FC = () => {
     const {accessToken} = useAuth()!
-    const {getUserDetailsForAdmin} = useUser(accessToken);
-    const [userDetailsForAdmin,setUserDetailsForAdmin] = useState<UserDetailsForAdmin[]>([])
+    const {getUserDetailsForAdmin, resetRole} = useUser(accessToken);
+    const [userDetailsForAdmin, setUserDetailsForAdmin] = useState<UserDetailsForAdmin[]>([])
     const [pageNumber, setPageNumber] = useState<number>(1);
-    const {value:isOpenDetails,setValue:setIsOpenDetails} = useBoolean()
-    const {value:isOpenCreateUR,setValue:setIsOpenCreateUR} = useBoolean()
-    const [userDetail,setUserDetail] = useState<UserDetailsForAdmin|null>(null)
-    const initialize = async (pageCurrent:number) => {
+    const {value: isOpenDetails, setValue: setIsOpenDetails} = useBoolean()
+    const {value: isOpenCreateUR, setValue: setIsOpenCreateUR} = useBoolean()
+    const [userDetail, setUserDetail] = useState<UserDetailsForAdmin | null>(null)
+    const initialize = async (pageCurrent: number) => {
         const data = await getUserDetailsForAdmin(pageCurrent)
         setUserDetailsForAdmin(data)
     }
@@ -34,8 +34,20 @@ const AdminAccountPage: FC = () => {
                 pageNew -= 1
                 setPageNumber(pageNew);
             }
+            await initialize(pageNew);
         }
     };
+    const delRoleHandler = async (userId: number) => {
+        const isDel = confirm("Bạn có chắc chắn muốn xóa hay không?")
+        if (isDel) {
+            await resetRole(userId, async () => {
+                toast.success("Xóa quyền thành công")
+                await initialize(pageNumber);
+            }, (message) => {
+                toast.error(message)
+            })
+        }
+    }
     return <Fragment>
         <HeadUtil
             title={"Quản lý tài khoản"}
@@ -102,21 +114,21 @@ const AdminAccountPage: FC = () => {
                                 <td className="border border-gray-200 px-4 py-2">{userDetails.fullName}</td>
                                 <td className="border border-gray-200 px-4 py-2">{userDetails.username}</td>
                                 <td className="px-4 py-2 flex flex-col justify-center items-center">
-                                    <span className={cn("font-semibold px-2 py-1 rounded",{
-                                        "bg-blue-200 text-blue-700" : userDetails.role === Role.ADMIN,
-                                        "bg-green-200 text-green-700" : userDetails.role === Role.ACCOUNTANT,
-                                        "bg-yellow-200 text-yellow-700" : userDetails.role === Role.DENTIST
+                                    <span className={cn("font-semibold px-2 py-1 rounded", {
+                                        "bg-blue-200 text-blue-700": userDetails.role === Role.ADMIN,
+                                        "bg-green-200 text-green-700": userDetails.role === Role.ACCOUNTANT,
+                                        "bg-yellow-200 text-yellow-700": userDetails.role === Role.DENTIST
                                     })}>{userDetails.role}</span>
                                 </td>
                                 <td className="border border-gray-200 px-4 py-2">
-                                    {(userDetails.role === Role.ACCOUNTANT && userDetails.accountant) ? userDetails.accountant.email:""}
-                                    {(userDetails.role === Role.ADMIN) ? userDetails.email:""}
-                                    {(userDetails.role === Role.DENTIST && userDetails.dentist) ? userDetails.dentist.email:""}
+                                    {(userDetails.role === Role.ACCOUNTANT && userDetails.accountant) ? userDetails.accountant.email : ""}
+                                    {(userDetails.role === Role.ADMIN) ? userDetails.email : ""}
+                                    {(userDetails.role === Role.DENTIST && userDetails.dentist) ? userDetails.dentist.email : ""}
                                 </td>
                                 <td className="border border-gray-200 px-4 py-2">
-                                    {(userDetails.role === Role.ACCOUNTANT && userDetails.accountant) ? userDetails.accountant.phoneNumber:""}
-                                    {(userDetails.role === Role.ADMIN) ? userDetails.phone:""}
-                                    {(userDetails.role === Role.DENTIST && userDetails.dentist) ? userDetails.dentist.phoneNumber:""}
+                                    {(userDetails.role === Role.ACCOUNTANT && userDetails.accountant) ? userDetails.accountant.phoneNumber : ""}
+                                    {(userDetails.role === Role.ADMIN) ? userDetails.phone : ""}
+                                    {(userDetails.role === Role.DENTIST && userDetails.dentist) ? userDetails.dentist.phoneNumber : ""}
                                 </td>
                                 <td className="border border-gray-200 px-4 py-2 flex flex-col md:flex-row items-center w-full gap-2">
                                     <button
@@ -131,12 +143,12 @@ const AdminAccountPage: FC = () => {
                                     </button>
                                     <button
                                         onClick={async () => {
-
+                                            await delRoleHandler(userDetails.id)
                                         }}
                                         className="w-full rounded-md bg-red-600 hover:bg-red-700 py-2 px-4 border border-transparent text-center
                                         text-sm text-white transition-all shadow-md hover:shadow-lg"
                                         type="button">
-                                        Xóa
+                                        Xóa quyền
                                     </button>
                                 </td>
                             </tr>

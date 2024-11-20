@@ -18,38 +18,24 @@ export const navLeftRoute: INavRoute[] = [
   },
   {
     title: 'Dịch vụ',
-    path: '/d',
-    children: [
-      {
-        title: 'Nhổ răng khôn',
-        path: '/d/2'
-      }
-    ]
+    path: '/dich-vu',
+    
   },
   {
     title: 'Bảng giá dịch vụ',
     path: '/d',
-    children: [
-      {
-        title: 'Bảng giá dịch vụ y tế',
-        path: '/d/2'
-      },
-      {
-        title: 'Bảng giá bảo hiểm',
-        path: '/d/2'
-      }
-    ]
+    
   }
 ]
 // eslint-disable-next-line react-refresh/only-export-components
 export const navRightRoute: INavRoute[] = [
   {
     title: 'Đội ngũ chuyên gia',
-    path: '/d'
+    path: '/bac-si'
   },
   {
-    title: 'Hướng dẫn khách hàng',
-    path: '/d'
+    title: 'Đặt lịch hẹn',
+    path: '/dat-lich'
   },
   {
     title: 'Liên hệ',

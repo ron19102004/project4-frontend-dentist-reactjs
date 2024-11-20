@@ -32,24 +32,48 @@ const ChatBot: React.FC<{ className?: ClassValue }> = ({ className }) => {
         setIndex(indexCurrent + 1)
         return indexCurrent
     }
+
+ 
     const onSubmitChat = async (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault()
-        const messageCurrent: string = message;
-        setMessage('')
+        event.preventDefault();
+        const messageCurrent = message;
+        setMessage('');
         messages.add({
+          id: getId(),
+          text: messageCurrent,
+          isUser: true,
+        });
+    
+        try {
+          // Gửi yêu cầu POST đến Flask backend
+          const res = await axios.post('http://127.0.0.1:5000/chat', {
+            message: messageCurrent,
+          });
+          console.log(res.data);
+          // Kiểm tra xem có dữ liệu phản hồi hợp lệ không
+          if (res.data && res.data.response) {
+            messages.add({
+              id: getId(),
+              text: res.data.response,
+              isUser: false,
+            });
+          } else {
+            // Trường hợp không có phản hồi hợp lệ từ backend
+            messages.add({
+              id: getId(),
+              text: 'Không có phản hồi từ AI.',
+              isUser: false,
+            });
+          }
+        } catch (error) {
+          console.error('Lỗi khi gửi yêu cầu:', error);
+          messages.add({
             id: getId(),
-            text: messageCurrent,
-            isUser: true
-        })
-        const res = await axios.post('http://localhost:3000/chat', {
-            message: messageCurrent
-        })
-        messages.add({
-            id: getId(),
-            text: res.data.message,
-            isUser: false
-        })
-    }
+            text: 'Đã xảy ra lỗi khi gửi tin nhắn.',
+            isUser: false,
+          });
+        }
+      };
     useEffect(() => {
         bottomMessageRef.current?.scrollIntoView({ behavior: 'smooth' });
     }, [messages.list]);

@@ -1,11 +1,14 @@
 import {AppointmentStatus, InvoiceStatus, MyBookingData} from "@/apis/models.d";
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import {Dialog, DialogContent, DialogTitle} from '@mui/material';
 import dateFormat from "@/components/utils/date-format.ts";
 import {LoopUtil} from "@/components/utils";
 import {cn} from "@/lib/cn.ts";
 import {Link} from "react-router-dom";
 import formatCurrency from "@/components/utils/price-format.ts";
+import {useAuth, useBoolean} from "@/hooks";
+import useAppointmentUser from "@/hooks/useAppointmentUser.hook.tsx";
+import toast from "react-hot-toast";
 
 
 interface MyBookingDialogProps {
@@ -16,18 +19,74 @@ interface MyBookingDialogProps {
 
 
 const MyBookingDialog: React.FC<MyBookingDialogProps> = ({myBookingData, isOpen, setOpen}) => {
+    const {accessToken} = useAuth()!
+    const {addRewardIntoAppointment} = useAppointmentUser(accessToken)
+    const {value: openAddRewardHistory, setValue: setOpenAddRewardHistory} = useBoolean()
+    const [transactionRewardCode, setTransactionRewardCode] = useState<number>(1)
     useEffect(() => {
+        setTransactionRewardCode(1)
+        setOpenAddRewardHistory(false)
     }, [myBookingData]);
     const handleClose = () => {
         setOpen(false);
     };
+    const addRewardHistory = async () => {
+        if (transactionRewardCode === 1) {
+            toast.error("Mã giao dịch không hợp lệ");
+            return
+        }
+        await addRewardIntoAppointment(
+            myBookingData.appointment.id,
+            transactionRewardCode, () => {
+                toast.success("Thêm thành công. Vui lòng tải lại trang")
+                setOpenAddRewardHistory(false)
+            }, (message) => {
+                toast.error(message)
+            })
+    }
     return (
         <Dialog open={isOpen} onClose={handleClose} fullWidth>
-            <DialogTitle className="text-lg font-semibold text-gray-800">
-                <i className="fas fa-file-invoice text-blue-600 mr-2"></i>
-                Chi tiết đặt lịch #{myBookingData.appointment.id}
+            <DialogTitle className="text-lg font-semibold text-gray-800 flex justify-between items-center border-b-2">
+                <div className={"font-semibold"}>
+                    <i className="fas fa-file-invoice text-blue-600 mr-2"></i>
+                    Chi tiết đặt lịch #{myBookingData.appointment.id}
+                </div>
+                {!myBookingData.invoice.rewardHistory && <div>
+                    <button
+                        onClick={()=>{
+                            setOpenAddRewardHistory(true)
+                        }}
+                        className={"text-sm bg-blue-200 hover:bg-blue-300 text-blue-800 px-2 py-2 rounded font-bold"}>Thêm
+                        phần thưởng
+                    </button>
+                </div>}
+                {myBookingData.invoice.rewardHistory && <h1 className={"text-sm font-semibold underline"}>Đã quy đổi quà với mã: {myBookingData.invoice.rewardHistory.id}</h1>}
             </DialogTitle>
             <DialogContent className="space-y-6">
+                {openAddRewardHistory && <section className="my-4 border px-4 py-2">
+                <label htmlFor="transactionCode" className="block text-sm font-medium text-gray-700 mb-2">
+                        Nhập mã giao dịch phần thưởng
+                    </label>
+                    <input
+                        onChange={(e) => {
+                            setTransactionRewardCode(parseInt(e.target.value))
+                        }}
+                        type="number"
+                        id="transactionCode"
+                        name="transactionCode"
+                        min="1"
+                        className="w-full px-4 py-2 border border-gray-300 shadow-sm text-gray-800
+                   focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500
+                   transition-all duration-300"
+                        placeholder="Nhập mã"
+                    />
+                    <div className={"flex justify-end items-center mt-2"}>
+                        <button onClick={addRewardHistory}
+                                className={"border border-green-300 bg-green-200 text-green-800 font-bold " +
+                                    "hover:bg-green-300 px-2 py-1"}>Thực hiện
+                        </button>
+                    </div>
+                </section>}
                 {/* Appointment Details */}
                 <section className="mb-4">
                     <h3 className="text-lg font-semibold text-blue-600">
@@ -153,7 +212,8 @@ const MyBookingDialog: React.FC<MyBookingDialogProps> = ({myBookingData, isOpen,
                         Nha sĩ
                     </h3>
                     <p className="text-gray-700"><strong>Tên:&nbsp;</strong>
-                        <Link to={"/bac-si/" + myBookingData.dentist.id} className={"underline hover:text-blue-600"}>
+                        <Link to={"/bac-si/" + myBookingData.dentist.id}
+                              className={"underline hover:text-blue-600"}>
                             {myBookingData.dentist.fullName}
                         </Link>
                     </p>

@@ -30,12 +30,26 @@ const DentistDetailPage: React.FC = () => {
                 <div className={"p-6 bg-gradient-to-b from-blue-200 to-white"}>
                     <div className="max-w-4xl mx-auto p-6 bg-gray-50 rounded-lg shadow-lg space-y-6">
                         {/* Header Section */}
-                        <header className="flex items-center space-x-4 border-b pb-4">
-                            <i className="fas fa-user-md text-blue-500 text-4xl"></i>
-                            <div>
-                                <h1 className="text-2xl font-bold text-gray-800">{data.fullName}</h1>
-                                <p className="text-sm text-gray-500">Mã số nha sĩ: #{data.id}</p>
+                        <header className="flex items-center border-b pb-4 justify-between">
+                            <div className="flex items-center space-x-4">
+                                <i className="fas fa-user-md text-blue-500 text-4xl"></i>
+                                <div>
+                                    <h1 className="text-xl md:text-2xl font-bold text-gray-800">{data.fullName}</h1>
+                                    <p className="text-sm text-gray-500">Mã số nha sĩ: #{data.id}</p>
+                                </div>
                             </div>
+                            {data.dentist.avatar && (
+                                <div className="flex justify-center">
+                                    <a href={data.dentist.avatar} target={"_blank"}>
+                                        <img
+                                            src={data.dentist.avatar}
+                                            alt="Dentist Avatar"
+                                            className="w-24 h-24 object-cover rounded shadow-md transform
+                                         transition-transform duration-200 hover:scale-150 border"
+                                        />
+                                    </a>
+                                </div>
+                            )}
                         </header>
 
                         {/* Contact Information */}

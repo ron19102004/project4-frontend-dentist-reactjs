@@ -19,6 +19,7 @@ interface ICreateAccountHasRoleDialogProps {
 interface IFormInput {
     phoneNumber: string;
     email: string;
+    avatar:string;
     specializeId?: number;
     description?: string;
 }
@@ -41,7 +42,8 @@ const CreateAccountHasRoleDialog: FC<ICreateAccountHasRoleDialogProps> = ({isOpe
             req = {
                 email: data.email,
                 phoneNumber: data.phoneNumber,
-                userId: userId
+                userId: userId,
+                avatar:data.avatar
             } as CreateAccountantRequest
         } else {
             req = {
@@ -50,6 +52,7 @@ const CreateAccountHasRoleDialog: FC<ICreateAccountHasRoleDialogProps> = ({isOpe
                 userId: userId,
                 specializeId:data.specializeId,
                 description:data.description,
+                avatar:data.avatar
             } as CreateDentistRequest
         }
         await createDentistOrAccountant(req,() => {
@@ -184,6 +187,17 @@ const CreateAccountHasRoleDialog: FC<ICreateAccountHasRoleDialogProps> = ({isOpe
                                 {...register('email', {required: 'Email là bắt buộc'})}
                             />
                             {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email.message}</p>}
+                        </div>
+                        {/* Avatar */}
+                        <div className="flex flex-col">
+                            <label className="text-sm font-semibold text-gray-700">Ảnh đại diện</label>
+                            <input
+                                type="text"
+                                className="mt-2 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50"
+                                placeholder="Nhập url"
+                                {...register('avatar', {required: 'Ảnh đại diện là bắt buộc'})}
+                            />
+                            {errors.avatar && <p className="text-red-500 text-xs mt-1">{errors.avatar.message}</p>}
                         </div>
 
                         {role === 'BS' && (

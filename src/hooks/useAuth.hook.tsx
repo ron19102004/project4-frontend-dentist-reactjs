@@ -16,7 +16,8 @@ export interface IUseAuth {
 
     verifyResetPassword(token: string): Promise<IResponseLayout<null>>
 
-    login(username: string, password: string): Promise<IResponseLayout<ILoginResponse>>
+    login(username: string, password: string,success: (data:IResponseLayout<ILoginResponse>) => void, 
+          error: (message: string) => void): Promise<void>
 
     logout: () => void;
     register: (data: IRegisterRequest, success: () => void, error: (message: string) => void) => Promise<void>
@@ -54,17 +55,23 @@ export const _useAuth = (): IUseAuth => {
             error(e?.response.data.message)
         }
     }
-    const login = async (username: string, password: string): Promise<IResponseLayout<ILoginResponse>> => {
-        const data = await authApi.login(username, password);
-        if (!data.data.user.activeTwoFactorAuthentication) {
-            Cookies.set("access-token", data.data.accessToken)
-            Cookies.set("refresh-token", data.data.refreshToken)
-            setToken(data.data.accessToken)
-            setIsAuth(true)
-            setUserCurrent(data.data.user)
-            setRole(data.data.user.role)
+    const login = async (username: string, password: string,success: (data:IResponseLayout<ILoginResponse>) => void, error: (message: string) => void): Promise<void> => {
+        try {
+            const data = await authApi.login(username, password);
+            if (!data.data.user.activeTwoFactorAuthentication) {
+                Cookies.set("access-token", data.data.accessToken)
+                Cookies.set("refresh-token", data.data.refreshToken)
+                setToken(data.data.accessToken)
+                setIsAuth(true)
+                setUserCurrent(data.data.user)
+                setRole(data.data.user.role)
+            }
+            success(data)
+        } catch (e){
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-expect-error
+            error(e?.response?.data.message)
         }
-        return data;
     }
     const getMyInfo = async () => {
         setUserFetching(true)
@@ -91,6 +98,7 @@ export const _useAuth = (): IUseAuth => {
         Cookies.remove("refresh-token")
         setIsAuth(false)
         setUserCurrent(null)
+        setInfoUserMore(null)
         setToken("")
     }
     // eslint-disable-next-line react-hooks/rules-of-hooks

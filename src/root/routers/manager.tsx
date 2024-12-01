@@ -10,6 +10,8 @@ import AccountantRewardPage from "@/root/pages/manager/accountant/reward/page.ts
 import AdminSpecializePage from "@/root/pages/manager/admin/specialize/page.tsx";
 import AdminAccountPage from "@/root/pages/manager/admin/account/page.tsx";
 import ProfileManagerPage from "@/root/pages/manager/profile/page.tsx";
+import AppointmentTodayPage from "@/root/pages/manager/dentist/appointment/appointment-today.page.tsx";
+import XRayToolPage from "@/root/pages/manager/dentist/xray/xray-tool.page.tsx";
 
 // eslint-disable-next-line react-refresh/only-export-components
 const CheckDashBoard = () => {
@@ -95,12 +97,12 @@ const dentistRouter: RouteObject = {
             element: <DashboardAdminPage/>
         },
         {
-            path: "lich-hen",
-            element: <h1>lich-hen</h1>
+            path: "lich-hen-hom-nay",
+            element: <AppointmentTodayPage/>
         },
         {
-            path: "ho-so",
-            element: <h1>ho-so</h1>
+            path: "xray-tool",
+            element: <XRayToolPage/>
         }
     ]
 }

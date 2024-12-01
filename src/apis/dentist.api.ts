@@ -14,6 +14,7 @@ async function getAll():Promise<IResponseLayout<DentistResponse[]>> {
     const res = await axios.get<IResponseLayout<DentistResponse[]>>(URL);
     return res.data;
 }
+
 export default {
     getById,
     getAll

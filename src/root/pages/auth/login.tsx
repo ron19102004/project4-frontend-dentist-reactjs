@@ -2,6 +2,7 @@ import {FC, useState} from "react"
 import {useNavigate} from "react-router-dom";
 import constants from "@/helper/constant.helper";
 import {useAuth} from "@/hooks";
+import toast from "react-hot-toast";
 
 interface LoginForm {
     username: string;
@@ -27,15 +28,14 @@ const LoginPage: FC = () => {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        try {
-            const data = await login(formData.username, formData.password);
+        await login(formData.username, formData.password,(data) => {
             if (data.success){
+                toast.success("Đăng nhập thành công")
                 navigate("/")
             }
-        } catch (err) {
-            console.log(err)
-            setError("")
-        }
+        },(error)=>{
+            setError(error)
+        });
     };
 
     return (

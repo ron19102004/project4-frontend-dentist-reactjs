@@ -9,7 +9,7 @@ import {LoopUtil} from "@/components/utils";
 import RewardHistoryCard from "@/root/pages/user/profile/reward-history.card.tsx";
 import UseRewardDialog from "@/root/pages/user/profile/use-reward-dialog.tsx";
 import {cn} from "@/lib/cn.ts";
-import useAppointmentUser from "@/hooks/useAppointmentUser.hook.ts";
+import useAppointmentUser from "@/hooks/useAppointmentUser.hook.tsx";
 import AppointmentCard from "@/root/pages/user/appointment/appointment.card.tsx";
 import MyBookingDialog from "@/root/pages/user/appointment/appointment-details-dialog.tsx";
 
@@ -39,7 +39,6 @@ const MyProfile: FC = () => {
         })
         const allMB = await getAllMyBooking()
         setAllMyBooking(allMB)
-        console.log(allMB)
     }
     useEffect(() => {
         init().then()
@@ -64,8 +63,9 @@ const MyProfile: FC = () => {
                                 "font-semibold text-blue-700 bg-blue-100": tabCurrent === Tab.REWARD_HISTORY,
                                 "hover:bg-gray-100": tabCurrent !== Tab.REWARD_HISTORY
                             })}
-                            onClick={() => {
+                            onClick={async () => {
                                 setTabCurrent(Tab.REWARD_HISTORY)
+                                await init()
                             }}
                         >
                             Lịch sử đổi điểm
@@ -75,8 +75,9 @@ const MyProfile: FC = () => {
                                 "font-semibold text-blue-700 bg-blue-100": tabCurrent === Tab.MY_BOOKING,
                                 "hover:bg-gray-100": tabCurrent !== Tab.MY_BOOKING
                             })}
-                            onClick={() => {
+                            onClick={async () => {
                                 setTabCurrent(Tab.MY_BOOKING)
+                                await init()
                             }}
                         >
                             Hồ sơ của tôi

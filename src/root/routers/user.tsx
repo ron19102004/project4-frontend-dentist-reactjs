@@ -11,6 +11,8 @@ import DentistPage from "@/root/pages/user/dentist/page.tsx";
 import DentistDetailPage from "@/root/pages/user/dentist/dentist-details.tsx";
 import ServicePage from "@/root/pages/user/service/page.tsx";
 import RewardPage from "@/root/pages/user/reward/page.tsx";
+import BookingPage from "@/root/pages/user/appointment/booking.page.tsx";
+import AppointmentDetailsPage from "@/root/pages/manager/dentist/appointment/appointment-details.page.tsx";
 
 
 const router: RouteObject[] = [
@@ -45,30 +47,31 @@ const router: RouteObject[] = [
                 ]
             },
             {
-                path: "tai-khoan",
+                path: "",
                 element: <AuthSafe includeRoles={[Role.PATIENT]}/>,
                 children: [
-                    {path: "", element: <MyProfile/>}
+                    {path: "tai-khoan", element: <MyProfile/>},
+                    {path: "dat-lich-hen", element: <BookingPage/>},
                 ]
             },
             {
-                path:"bac-si",
+                path: "bac-si",
                 element: <Outlet/>,
-                children:[
+                children: [
                     {
-                        path:"",
+                        path: "",
                         element: <DentistPage/>,
                     },
                     {
-                        path:":id",
+                        path: ":id",
                         element: <DentistDetailPage/>,
                     }
                 ]
             },
             {
-                path:"dich-vu",
+                path: "dich-vu",
                 element: <Outlet/>,
-                children:[
+                children: [
                     {
                         path: "",
                         element: <ServicePage/>
@@ -76,10 +79,17 @@ const router: RouteObject[] = [
                 ]
             },
             {
-                path:"uu-dai",
+                path: "uu-dai",
                 element: <RewardPage/>
             }
         ],
+    },
+    {
+        path: "ho-so",
+        element: <AuthSafe includeRoles={[Role.PATIENT,Role.DENTIST]}/>,
+        children: [
+            {path: ":id",element: <AppointmentDetailsPage/>}
+        ]
     },
 ];
 export default router;

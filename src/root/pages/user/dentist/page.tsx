@@ -28,8 +28,20 @@ const DentistPage: FC = () => {
             <ul className={"grid-cols-1 grid md:grid-cols-2 lg:grid-cols-3 gap-6 p-6 "}>
                 <LoopUtil data={dentists} render={(dentist) => {
                     return <Link to={"/bac-si/" + dentist.id}>
-                        <div className="border rounded-lg p-6 shadow-lg bg-white space-y-4 hover:shadow-xl hover:scale-105
-                    transition-all duration-300">
+                        <div
+                            className="border rounded-lg p-6 shadow-lg bg-white space-y-4 hover:shadow-xl hover:scale-105 transition-all duration-300">
+                            {/* Avatar */}
+                            {dentist.dentist.avatar && (
+                                <div className="flex justify-center">
+                                    <img
+                                        src={dentist.dentist.avatar}
+                                        alt="Dentist Avatar"
+                                        className="w-24 h-24 object-cover rounded-full shadow-md transform
+                                         transition-transform duration-200 hover:scale-150 border"
+                                    />
+                                </div>
+                            )}
+
                             {/* Header */}
                             <div className="flex items-center space-x-3">
                                 <i className="fas fa-user-md text-blue-600 text-3xl"></i>
@@ -68,6 +80,7 @@ const DentistPage: FC = () => {
                                 <span><strong>Mô tả:</strong> {dentist.dentist.description || "Không có mô tả"}</span>
                             </p>
                         </div>
+
                     </Link>
                 }}/>
             </ul>

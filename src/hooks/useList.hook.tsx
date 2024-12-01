@@ -16,6 +16,8 @@ const useList = <X extends Entity,>(defaultList: X[] = []): IUseList<X> => {
             setList(list)
         },
         add(value) {
+            const exist = list.find((x) => x.id === value.id)
+            if (exist) return
             setList(preList => [...preList, value]);
         },
         remove(id) {

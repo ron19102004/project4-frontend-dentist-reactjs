@@ -92,7 +92,8 @@ export interface InvoiceService extends Entity {
 export interface Accountant extends Entity {
     "email": string,
     "phoneNumber": string,
-    "createdAt": string
+    "createdAt": string,
+    "avatar":string
 }
 
 export enum InvoiceStatus {
@@ -135,7 +136,8 @@ export interface Dentist extends Entity {
     "phoneNumber": string,
     "createdAt": string,
     "description": string,
-    "specialize": Specialize
+    "specialize": Specialize,
+    "avatar":string
 }
 export interface DentistResponse{
     dentist: Dentist,

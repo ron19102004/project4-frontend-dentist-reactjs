@@ -41,7 +41,8 @@ async function getAllUsersDetailsForAdmin(token: string, pageNumber: number): Pr
 export interface CreateAccountantRequest {
     "userId": number,
     "phoneNumber": string,
-    "email": string
+    "email": string,
+    "avatar":string
 }
 
 export interface CreateDentistRequest extends CreateAccountantRequest {

@@ -96,6 +96,7 @@ const AdminAccountPage: FC = () => {
                     <tr className={"bg-gray-700 text-white"}>
                         <th className="border border-gray-200 px-4 py-2 text-left">ID tài khoản</th>
                         <th className="border border-gray-200 px-4 py-2 text-left">Tên</th>
+                        <th className="border border-gray-200 px-4 py-2 text-left">Ảnh đại diện</th>
                         <th className="border border-gray-200 px-4 py-2 text-left">Tên tài khoản</th>
                         <th className="border border-gray-200 px-4 py-2 text-left">Vai trò</th>
                         <th className="border border-gray-200 px-4 py-2 text-left">Email</th>
@@ -107,11 +108,38 @@ const AdminAccountPage: FC = () => {
                     <LoopUtil
                         data={userDetailsForAdmin}
                         render={userDetails => {
+                            let avatar = ""
+                            switch (userDetails.role) {
+                                case Role.ACCOUNTANT: {
+                                    if (userDetails.accountant) {
+                                        avatar = userDetails.accountant.avatar
+                                    }
+                                    break;
+                                }
+                                case Role.DENTIST: {
+                                    if (userDetails.dentist) {
+                                        avatar = userDetails.dentist.avatar
+                                    }
+                                    break;
+                                }
+                            }
                             return <tr className="hover:bg-gray-50 shadow">
                                 <td className="border border-gray-200 px-4 py-2">
                                     <span className={"font-semibold"}>{userDetails.id}</span>
                                 </td>
                                 <td className="border border-gray-200 px-4 py-2">{userDetails.fullName}</td>
+                                <td className="border border-gray-200 px-4 py-2">
+                                    {avatar.length > 0 && (
+                                        <div className="flex flex-col justify-center items-center min-h-14 min-w-14">
+                                            <img
+                                                src={avatar}
+                                                alt="AVATAR"
+                                                className="w-14 h-14 object-cover rounded transform
+                                                transition-transform duration-200 hover:scale-150 border"
+                                            />
+                                        </div>
+                                    )}
+                                </td>
                                 <td className="border border-gray-200 px-4 py-2">{userDetails.username}</td>
                                 <td className="px-4 py-2 flex flex-col justify-center items-center">
                                     <span className={cn("font-semibold px-2 py-1 rounded", {

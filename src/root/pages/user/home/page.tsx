@@ -35,10 +35,10 @@ const HomeUserPage: FC = () => {
                             Chúng tôi mang đến dịch vụ chăm sóc răng miệng toàn diện, giúp bạn
                             luôn tự tin với nụ cười khỏe đẹp.
                         </p>
-                        <button
-                            className="mt-4 px-6 py-3 bg-green-500 text-white text-lg font-semibold rounded-lg hover:bg-green-600 transition duration-300">
+                        <Link to={"/dat-lich-hen"}
+                            className="inline-block mt-4 px-6 py-3 bg-green-500 text-white text-lg font-semibold rounded-lg hover:bg-green-600 transition duration-300">
                             Đặt lịch hẹn
-                        </button>
+                        </Link>
                     </div>
                 </div>
 

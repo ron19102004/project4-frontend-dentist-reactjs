@@ -16,17 +16,18 @@ const DentistCard: React.FC<{ dentist: Dentist }> = ({dentist}) => {
             <div className="space-y-4">
                 <p className="flex items-center text-gray-700">
                     <i className="fas fa-envelope mr-3 text-blue-400"></i>
-                    <span className="font-semibold">Email:</span> {dentist.email}
+                    <span className="font-semibold">Email:</span> {dentist?.email ?? "Unknown"}
                 </p>
                 <p className="flex items-center text-gray-700">
                     <i className="fas fa-phone mr-3 text-green-400"></i>
-                    <span className="font-semibold">Số điện thoại:</span> {dentist.phoneNumber}
+                    <span className="font-semibold">Số điện thoại:</span> {dentist?.phoneNumber ?? "Unknown"}
                 </p>
                 <p className="flex items-center text-gray-700">
                     <i className="fas fa-user-md mr-3 text-purple-400"></i>
                     <span className="font-semibold">Chuyên môn:</span>
-                    <Link to={"/chuyen-nganh/" + dentist.specialize.slug} className={"hover:underline hover:text-blue-600"}>
-                        {dentist.specialize.name}
+                    <Link to={"/chuyen-nganh/" + (dentist?.specialize?.slug ?? "")}
+                          className={"hover:underline hover:text-blue-600"}>
+                        {dentist?.specialize?.name ?? "Unknown"}
                     </Link>
                 </p>
                 <div>
@@ -35,7 +36,7 @@ const DentistCard: React.FC<{ dentist: Dentist }> = ({dentist}) => {
                     </label>
                     <textarea
                         id="description"
-                        value={dentist.description}
+                        value={dentist?.description ?? ""}
                         readOnly
                         className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400 resize-none bg-gray-50 text-gray-700"
                         rows={4}
@@ -44,7 +45,7 @@ const DentistCard: React.FC<{ dentist: Dentist }> = ({dentist}) => {
             </div>
             {/* Footer */}
             <p className="mt-6 text-xs text-gray-500 text-right">
-                Ngày tạo: {dateFormat(dentist.createdAt)}
+                Ngày tạo: {dentist?.createdAt ? dateFormat(dentist.createdAt) : "Unknown"}
             </p>
         </div>
     );

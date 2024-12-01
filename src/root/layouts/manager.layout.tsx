@@ -38,8 +38,8 @@ export default function ManagerLayout() {
         return [
             {path: "/quan-ly/dentist/trang-chu", title: "Trang chủ"},
             {path: "/quan-ly/dentist/thong-tin-ca-nhan", title: "Thông tin của tôi"},
-            {path: "/quan-ly/dentist/lich-hen", title: "Lịch hẹn"},
-            {path: "/quan-ly/dentist/ho-so", title: "Hồ sơ bệnh án"}
+            {path: "/quan-ly/dentist/lich-hen-hom-nay", title: "Lịch hẹn hôm nay"},
+            {path: "/quan-ly/dentist/xray-tool", title: "Xray Tool"}
         ]
     }
     useEffect(() => {

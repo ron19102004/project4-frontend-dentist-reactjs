@@ -11,21 +11,24 @@ export interface Entity {
 }
 
 export interface Service extends Entity {
-    "createdAt": "2024-11-18T10:44:36.978Z",
-    "description": "string",
-    "poster": "string",
-    "name": "string",
-    "slug": "string",
-    "price": 0,
-    "pointReward": 0
+    "createdAt": string,
+    "description": string,
+    "poster": string,
+    "name":string,
+    "slug": string,
+    "price": number,
+    "pointReward": number
 }
-
-export interface RewardPoint {
-    "point": number,
-    "pointsUsed": number,
-    "lastUpdatedAt": string
+export interface ServiceHot {
+    "description": string,
+    "poster": string,
+    "name": string,
+    "slug": string,
+    "price": number,
+    "pointReward": number,
+    "quantityUsed": number,
+    "serviceId":number
 }
-
 export enum Gender {
     MALE = "MALE",
     FEMALE = "FEMALE",
@@ -38,6 +41,20 @@ export enum Role {
     ACCOUNTANT = "ACCOUNTANT",
 }
 
+export interface RewardPoint {
+    "point": number,
+    "pointsUsed": number,
+    "lastUpdatedAt": string
+}
+
+export interface RewardHistory {
+    "id": number,
+    "pointsUsed": number,
+    "content": string,
+    "createdAt": string,
+    "used": boolean
+}
+
 export interface User extends Entity {
     "createdAt": string,
     "username": string,
@@ -48,7 +65,7 @@ export interface User extends Entity {
     "email": string,
     "activeTwoFactorAuthentication": boolean
     "rewardPoint": RewardPoint,
-    "role": Role
+    "role": Role,
 }
 
 export interface Payment extends Entity {
@@ -120,7 +137,11 @@ export interface Dentist extends Entity {
     "description": string,
     "specialize": Specialize
 }
-
+export interface DentistResponse{
+    dentist: Dentist,
+    fullName: string,
+    id: number
+}
 export interface Accountant extends Entity {
     "email": string,
     "phoneNumber": string,
@@ -134,5 +155,74 @@ export interface UserDetailsForAdmin extends Entity {
     "dentist": Dentist | null,
     "accountant": Accountant | null,
     "email": string,
-    "phone":string
+    "phone": string
+}
+
+export enum AppointmentStatus {
+    SCHEDULED="SCHEDULED",
+    COMPLETED="COMPLETED",
+    CANCELLED="CANCELLED",
+}
+export interface Appointment {
+    "id": number,
+    "createdAt": string,
+    "appointmentDate": string,
+    "status": AppointmentStatus,
+    "notes": string
+}
+
+export interface DentalRecord {
+    "id": number,
+    "createdAt": string,
+    "updatedAt": string,
+    "examinationDate": string,
+    "diagnosis": string,
+    "treatment": string,
+    "notes": string
+}
+export enum PaymentType {
+    CASH="CASH",
+    CREDIT_CARD="CREDIT_CARD",
+    BANK_TRANSFER="BANK_TRANSFER",
+}
+
+export interface Payment {
+    "id": number,
+    "paymentDate": string,
+    "amountPaid": number,
+    "paymentType": PaymentType,
+    "discountPercent": number
+}
+
+export interface InvoiceService {
+    "id": number,
+    "createdAt": string,
+    "priceServiceCurrent": number,
+    "nameServiceCurrent": string,
+    "pointRewardCurrent": number
+}
+export enum InvoiceStatus {
+    PENDING="PENDING",
+    PAID="PAID",
+    CANCELLED="CANCELLED",
+}
+
+export interface Invoice {
+    "id": number,
+    "createdAt": string,
+    "updatedAt": string,
+    "status": InvoiceStatus,
+    "amountOriginPaid": number,
+    rewardHistory: RewardHistory | null,
+}
+
+interface MyBookingData {
+    appointment: Appointment,
+    invoice: Invoice,
+    payment: Payment,
+    dentist:DentistResponse,
+    user: User,
+    invoiceServices: InvoiceService[],
+    accountant: Accountant | null,
+    dentalRecord: DentalRecord|null
 }

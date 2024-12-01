@@ -42,7 +42,7 @@ export default function Userlayout() {
             }
             case Role.PATIENT: {
                 return {
-                    path: "/",
+                    path: "/tai-khoan",
                     title: "Tài Khoản"
                 }
             }

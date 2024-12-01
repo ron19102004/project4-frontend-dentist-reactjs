@@ -1,4 +1,4 @@
-import {Service} from "@/apis/models";
+import {Service, ServiceHot} from "@/apis/models";
 import serviceApi from "@/apis/service.api";
 import {useEffect, useContext, useState} from "react";
 import {ServiceContext} from "@/context/service.context"
@@ -7,6 +7,7 @@ import {CreateServiceFormData} from "@/root/pages/manager/accountant/service/cre
 
 export interface IUseService {
     list: Service[];
+    serviceHot: ServiceHot[],
 
     getAllService(): Promise<void>;
 
@@ -20,8 +21,18 @@ export interface IUseService {
 export const _useService = (): IUseService => {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const [list, setList] = useState<Service[] | []>([]);
+
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const [serviceHot, setServiceHot] = useState<ServiceHot[] | []>([]);
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const {value: isServicesFetching, setValue: setFetching} = useBoolean(true)
+
+    const getServiceHot = async () => {
+        const data = await serviceApi.getServiceHot();
+        if (data.success) {
+            setServiceHot(data.data)
+        }
+    }
     const getAllService = async () => {
         setFetching(true)
         const data = await serviceApi.getAllServices();
@@ -52,8 +63,9 @@ export const _useService = (): IUseService => {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     useEffect(() => {
         getAllService().then()
+        getServiceHot().then()
     }, [])
-    return {list, getAllService, isServicesFetching, newService};
+    return {list, serviceHot, getAllService, isServicesFetching, newService};
 };
 
 const useService = () => useContext(ServiceContext)

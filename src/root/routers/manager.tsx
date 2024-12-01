@@ -9,6 +9,7 @@ import AccountantInvoicePage from "@/root/pages/manager/accountant/invoice/page.
 import AccountantRewardPage from "@/root/pages/manager/accountant/reward/page.tsx";
 import AdminSpecializePage from "@/root/pages/manager/admin/specialize/page.tsx";
 import AdminAccountPage from "@/root/pages/manager/admin/account/page.tsx";
+import ProfileManagerPage from "@/root/pages/manager/profile/page.tsx";
 
 // eslint-disable-next-line react-refresh/only-export-components
 const CheckDashBoard = () => {
@@ -35,7 +36,7 @@ const adminRouter: RouteObject = {
         },
         {
             path: "thong-tin-ca-nhan",
-            element: <h1>thong-tin-ca-nhan</h1>
+            element: <ProfileManagerPage/>
         },
         {
             path: "chuyen-nganh",
@@ -65,7 +66,7 @@ const accountantRouter: RouteObject = {
         },
         {
             path: "thong-tin-ca-nhan",
-            element: <h1>thong-tin-ca-nhan</h1>
+            element: <ProfileManagerPage/>
         },
         {
             path: "phan-qua",
@@ -87,7 +88,7 @@ const dentistRouter: RouteObject = {
         },
         {
             path: "thong-tin-ca-nhan",
-            element: <h1>thong-tin-ca-nhan</h1>
+            element: <ProfileManagerPage/>
         },
         {
             path: "trang-chu",

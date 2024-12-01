@@ -1,14 +1,13 @@
 import assets from "@/assets";
-import ServiceCard from "@/components/card/service-card";
-import {HeadUtil} from "@/components/utils";
+import {HeadUtil, LoopUtil} from "@/components/utils";
 import {cn} from "@/lib/cn";
 import {FC, Fragment} from "react";
-import {Button} from "@mui/material";
 import {Link} from "react-router-dom";
 import useService from "@/hooks/useService.hook.tsx";
+import ServiceHotCard from "@/root/pages/user/service/service-hot.card.tsx";
 
 const HomeUserPage: FC = () => {
-    const {list: services} = useService()!;
+    const {serviceHot: services} = useService()!;
     return (
         <Fragment>
             <HeadUtil
@@ -51,27 +50,19 @@ const HomeUserPage: FC = () => {
                     >
                         CÁC DỊCH VỤ HÀNG ĐẦU
                     </h1>
-                    <div
-                        className="gap-12 service-list flex justify-center flex-col service-list flex justify-center flex-col items-center">
-                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full max-w-screen-lg">
-                            {services.map((service, item) => (
-                                <ServiceCard
-                                    key={item}
-                                    id={service.id}
-                                    name={service.name}
-                                    description={service.description}
-                                    price={service.price}
-                                    poster={service.poster} createdAt={"2024-11-18T10:44:36.978Z"}
-                                    slug={"string"}
-                                    pointReward={0}
-                                />
-                            ))}
+                    <div>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                            <LoopUtil
+                                data={services} render={(service) => <ServiceHotCard service={service}/>}/>
                         </div>
-                        <Link className="pb-12" to="/dich-vu">
-                            <Button className="px-4 py-4" size="large" variant="outlined">
-                                XEM TẤT CẢ
-                            </Button>
-                        </Link>
+                        <div className={"flex justify-center items-center py-6"}>
+                            <Link
+                                to="/dich-vu"
+                                className="inline-block px-6 py-3 text-white bg-blue-600 rounded-lg shadow-md hover:bg-blue-700 hover:shadow-lg transition-all duration-300"
+                            >
+                                Xem tất cả
+                            </Link>
+                        </div>
                     </div>
                 </div>
             </section>

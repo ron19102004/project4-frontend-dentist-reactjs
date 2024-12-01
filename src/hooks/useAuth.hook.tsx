@@ -1,4 +1,4 @@
-import {IResponseLayout, Role, User} from "@/apis/models.d";
+import {Accountant, Dentist, IResponseLayout, Role, User} from "@/apis/models.d";
 import authApi, {ILoginResponse, IRegisterRequest} from "@/apis/auth.api.ts";
 import userApi from "@/apis/user.api.ts";
 import useBoolean from "@/hooks/useBoolean.hook.tsx";
@@ -11,7 +11,8 @@ export interface IUseAuth {
     userCurrent: User | null;
     role: Role,
     isUserFetching: boolean;
-    accessToken: string
+    accessToken: string;
+    infoUserMore: Dentist | Accountant | null
 
     verifyResetPassword(token: string): Promise<IResponseLayout<null>>
 
@@ -31,6 +32,8 @@ export const _useAuth = (): IUseAuth => {
     const [role, setRole] = useState<Role>(Role.PATIENT)
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const [accessToken, setToken] = useState<string>("")
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const [infoUserMore,setInfoUserMore] = useState<Dentist | Accountant | null>(null)
     const verifyResetPassword = async (token: string): Promise<IResponseLayout<null>> => {
         return await authApi.verifyResetPassword(token);
     }
@@ -71,9 +74,10 @@ export const _useAuth = (): IUseAuth => {
                 try {
                     const data = await userApi.getMyInfo(accessToken);
                     setIsAuth(true)
-                    setUserCurrent(data)
-                    setRole(data.role)
+                    setUserCurrent(data.user)
+                    setRole(data.user.role)
                     setToken(accessToken)
+                    setInfoUserMore(data.dentist ?? data.accountant)
                 } catch (error) {
                     console.log(error);
                 }
@@ -92,7 +96,6 @@ export const _useAuth = (): IUseAuth => {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     useEffect(() => {
         getMyInfo().then()
-
     }, [])
     return {
         isAuthenticated,
@@ -100,6 +103,7 @@ export const _useAuth = (): IUseAuth => {
         role,
         isUserFetching,
         accessToken,
+        infoUserMore,
         verifyResetPassword,
         login,
         logout,

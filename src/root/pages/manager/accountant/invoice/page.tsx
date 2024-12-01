@@ -69,7 +69,7 @@ const AccountantInvoicePage: FC = () => {
     return <Fragment>
         <HeadUtil
             title={"Quản lý hóa đơn"}
-            author={""}
+            author={"Ronial"}
             urlImage={""}
             urlPageCurrent={""}
         />

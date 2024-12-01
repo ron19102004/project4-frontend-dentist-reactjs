@@ -1,6 +1,6 @@
 import {URL_API_BASE} from "@/helper/constant.helper.ts";
 import axios from "axios";
-import {IResponseLayout, Service} from "@/apis/models";
+import {IResponseLayout, Service, ServiceHot} from "@/apis/models";
 import {CreateServiceFormData} from "@/root/pages/manager/accountant/service/create.tsx";
 
 const SERVICE_URL_BASE: string = URL_API_BASE + "/api/services/v1";
@@ -27,9 +27,14 @@ async function createService(dataForm: CreateServiceFormData, token: string): Pr
     })
     return response.data;
 }
-
+async function getServiceHot():Promise<IResponseLayout<ServiceHot[]>>{
+    const URL = SERVICE_URL_BASE + "/hot";
+    const response = await axios.get<IResponseLayout<ServiceHot[]>>(URL)
+    return response.data
+}
 export default {
     getAllServices,
     getDetailsServices,
-    createService
+    createService,
+    getServiceHot
 }

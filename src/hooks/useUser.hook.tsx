@@ -1,5 +1,10 @@
 import {UserDetailsForAdmin} from "@/apis/models.d";
-import userApi, {CheckUserExistResponse, CreateAccountantRequest, CreateDentistRequest} from "@/apis/user.api.ts";
+import userApi, {
+    CheckUserExistResponse,
+    CreateAccountantRequest,
+    CreateDentistRequest,
+    IMyRewardHistoriesDataResponse
+} from "@/apis/user.api.ts";
 
 interface IUseUser {
     getUserDetailsForAdmin: (pageNumber: number) => Promise<UserDetailsForAdmin[]>
@@ -13,9 +18,45 @@ interface IUseUser {
     resetRole: (userId: number,
                 success: () => Promise<void>,
                 error: (message: string) => void) => Promise<void>
+    getMyRewardHistories: (success: (data: IMyRewardHistoriesDataResponse) => void,
+                           error: (message: string) => void) => Promise<void>,
+    useReward: (rewardId: number, success: () => Promise<void>,
+                error: (message: string) => void) => Promise<void>
 }
 
 const useUser = (token: string): IUseUser => {
+    const useReward = async (
+        rewardId: number,
+        success: () => Promise<void>,
+        error: (message: string) => void) => {
+        try {
+            const data = await userApi.useReward(token, rewardId);
+            if (data.success) {
+                await success();
+                return
+            }
+            error(data.message)
+        } catch (e) {
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-expect-error
+            error(e?.response.data.message)
+        }
+    }
+    const getMyRewardHistories = async (success: (data: IMyRewardHistoriesDataResponse) => void,
+                                        error: (message: string) => void) => {
+        try {
+            const res = await userApi.getMyRewardHistories(token);
+            if (res.success) {
+                success(res.data)
+                return;
+            }
+            error(res.message)
+        } catch (e) {
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-expect-error
+            error(e?.response.data.message)
+        }
+    }
     const resetRole = async (
         userId: number,
         success: () => Promise<void>,
@@ -23,7 +64,7 @@ const useUser = (token: string): IUseUser => {
         try {
             const data = await userApi.resetRole(userId, token);
             if (data.success) {
-               await success();
+                await success();
                 return
             }
             error(data.message)
@@ -77,7 +118,9 @@ const useUser = (token: string): IUseUser => {
         getUserDetailsForAdmin,
         createDentistOrAccountant,
         checkUserExist,
-        resetRole
+        resetRole,
+        getMyRewardHistories,
+        useReward
     }
 }
 export default useUser;

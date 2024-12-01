@@ -1,12 +1,26 @@
 import {URL_API_BASE} from "@/helper/constant.helper.ts";
 import axios from "axios";
-import {IResponseLayout, Role, User, UserDetailsForAdmin} from "@/apis/models.d";
+import {
+    Accountant,
+    Dentist,
+    IResponseLayout,
+    RewardHistory,
+    RewardPoint,
+    Role,
+    User,
+    UserDetailsForAdmin
+} from "@/apis/models.d";
 
 const USER_URL_BASE: string = URL_API_BASE + "/api/users/v1";
 
-async function getMyInfo(token: string): Promise<User> {
+export interface IMyInfoDetailsResponse{
+    user: User,
+    dentist: Dentist | null,
+    accountant: Accountant | null,
+}
+async function getMyInfo(token: string): Promise<IMyInfoDetailsResponse> {
     const getMeURL = USER_URL_BASE + "/me"
-    const response = await axios.get<User>(getMeURL, {
+    const response = await axios.get<IMyInfoDetailsResponse>(getMeURL, {
         headers: {
             "Authorization": "Bearer " + token,
         }
@@ -72,10 +86,34 @@ async function resetRole(userId:number,token:string):Promise<IResponseLayout<nul
     })
     return res.data
 }
+export interface IMyRewardHistoriesDataResponse{
+    rewardPoint: RewardPoint,
+    rewardHistories: RewardHistory[]
+}
+async function getMyRewardHistories(token:string):Promise<IResponseLayout<IMyRewardHistoriesDataResponse>>{
+    const URL = USER_URL_BASE + "/my-reward-history"
+    const res = await axios.get<IResponseLayout<IMyRewardHistoriesDataResponse>>(URL, {
+        headers:{
+            "Authorization": "Bearer " + token,
+        }
+    })
+    return res.data
+}
+async function useReward(token:string,rewardId:number):Promise<IResponseLayout<RewardHistory>> {
+    const URL = USER_URL_BASE + "/my-reward/use-point/"+rewardId;
+    const res = await axios.post<IResponseLayout<RewardHistory>>(URL,{}, {
+        headers:{
+            "Authorization": "Bearer " + token,
+        }
+    })
+    return res.data
+}
 export default {
     getMyInfo,
     getAllUsersDetailsForAdmin,
     createDentistOrAccountant,
     checkUserExistResponse,
-    resetRole
+    resetRole,
+    getMyRewardHistories,
+    useReward
 }

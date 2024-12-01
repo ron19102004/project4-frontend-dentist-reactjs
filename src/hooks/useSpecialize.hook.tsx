@@ -15,6 +15,7 @@ interface IUseSpecializeProps {
              success: () => Promise<void>,
              error: (message: string) => void) => Promise<void>
     getById: (id: number) => Promise<Specialize | null>
+    getBySlug:(slug:string) => Promise<Specialize | null>
 }
 
 const useSpecialize = (token?: string): IUseSpecializeProps => {
@@ -72,12 +73,17 @@ const useSpecialize = (token?: string): IUseSpecializeProps => {
         const res = await specializeApi.getById(id)
         return res.success ? res.data : null
     }
+    const getBySlug = async (slug:string) => {
+        const res = await specializeApi.getBySlug(slug)
+        return res.success ? res.data : null
+    }
     return {
         create,
         getAll,
         remove,
         update,
-        getById
+        getById,
+        getBySlug
     }
 }
 export default useSpecialize

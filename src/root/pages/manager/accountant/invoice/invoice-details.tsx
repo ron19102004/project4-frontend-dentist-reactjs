@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {FC} from 'react';
+import {FC, useEffect} from 'react';
 import Dialog from '@mui/material/Dialog';
 import {InvoiceForAccountant, InvoiceStatus} from "@/apis/models.d";
 import {cn} from "@/lib/cn.ts";
@@ -12,17 +12,14 @@ interface IInvoiceDetailsDialogProps {
 }
 
 const InvoiceDetailsDialog: FC<IInvoiceDetailsDialogProps> = ({isOpen, setOpen, invoice}) => {
-    const {value: isOpenAddRewardHistory, setValue: setIsOpenAddRewadHistory} = useBoolean()
     const {value: isOpenAddPercentDiscount, setValue: setIsOpenAddPercentDiscount} = useBoolean()
     const handleClose = () => {
         setOpen(false);
     };
-    const addRewardHistory = async () =>{
-        setIsOpenAddRewadHistory(false)
-    }
     const addPercentDiscount= async ()=>{
         setIsOpenAddPercentDiscount(false)
     }
+    useEffect(() => {}, [invoice]);
     return (
         <React.Fragment>
             <Dialog
@@ -155,20 +152,6 @@ const InvoiceDetailsDialog: FC<IInvoiceDetailsDialogProps> = ({isOpen, setOpen, 
                         </div>
                     )}
                     <div className={"grid grid-cols-2 gap-2"}>
-                        {(invoice.invoiceStatus === InvoiceStatus.PENDING && invoice.rewardHistory === null && !isOpenAddRewardHistory) &&
-                            <div>
-                                <button
-                                    onClick={() => {
-                                        setIsOpenAddRewadHistory(true)
-                                    }}
-                                    className="w-full rounded-md bg-red-600 py-1 px-2 border border-transparent text-center
-                                 text-sm text-white transition-all shadow-md hover:shadow-lg focus:bg-red-700
-                                 focus:shadow-none active:bg-red-700 hover:bg-red-700 active:shadow-none disabled:pointer-events-none
-                                 disabled:opacity-50 disabled:shadow-none"
-                                    type="button">
-                                    Thêm mã đổi thưởng
-                                </button>
-                            </div>}
                         {(invoice.invoiceStatus === InvoiceStatus.PENDING && invoice.payment.discountPercent === null && !isOpenAddPercentDiscount) &&
                             <div>
                                 <button
@@ -194,26 +177,6 @@ const InvoiceDetailsDialog: FC<IInvoiceDetailsDialogProps> = ({isOpen, setOpen, 
                             </button>
                         </div>}
                     </div>
-                    {isOpenAddRewardHistory && <div className="flex flex-col items-start space-y-4 w-full md:w-auto">
-                        <label htmlFor="promoCode" className="text-sm font-medium text-gray-700">
-                            Thêm mã đổi thưởng
-                        </label>
-                        <div className="flex items-center space-x-2 w-full md:w-auto">
-                            <input
-                                id="promoCode"
-                                type="number"
-                                className="block w-full md:w-64 px-3 py-2 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                                placeholder="Nhập mã đổi thưởng"
-                            />
-                            <button
-                                onClick={addRewardHistory}
-                                type="button"
-                                className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            >
-                                Xác nhận
-                            </button>
-                        </div>
-                    </div>}
                     {isOpenAddPercentDiscount && <div className="flex flex-col items-start space-y-4 w-full md:w-auto">
                         <label htmlFor="promoCodeDiscount" className="text-sm font-medium text-gray-700">
                             Thêm phần trăm giảm giá

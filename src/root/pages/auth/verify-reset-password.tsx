@@ -13,6 +13,7 @@ const VerifyResetPassword: React.FC = () => {
     if (!token) {
         return <ForbiddenPage />;
     }
+    // eslint-disable-next-line react-hooks/rules-of-hooks
     const { isLoading } = useQuery<IResponseLayout<null>>(
         'verifyResetPassword', // Query key
         () => verifyResetPassword(token),

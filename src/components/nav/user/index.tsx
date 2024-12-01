@@ -17,40 +17,30 @@ export const loginRoute: INavRoute = {
 export const navLeftRoute: INavRoute[] = [
   {
     title: 'Trang chủ',
-    path: 'trang-chu'
+    path: '/trang-chu'
   },
   {
     title: 'Dịch vụ',
-    path: '/d',
+    path: '/dich-vu',
   },
   {
-    title: 'Bảng giá dịch vụ',
-    path: '/d',
-    children: [
-      {
-        title: 'Bảng giá dịch vụ y tế',
-        path: '/d/2'
-      },
-      {
-        title: 'Bảng giá bảo hiểm',
-        path: '/d/2'
-      }
-    ]
+    title: 'Chuyên ngành',
+    path: '/chuyen-nganh',
   }
 ]
 // eslint-disable-next-line react-refresh/only-export-components
 export const navRightRoute: INavRoute[] = [
   {
-    title: 'Đội ngũ chuyên gia',
-    path: '/d'
+    title: 'Đội ngũ bác sĩ',
+    path: '/bac-si'
   },
   {
     title: 'Hướng dẫn khách hàng',
-    path: '/d'
+    path: '/huong-dan'
   },
   {
     title: 'Liên hệ',
-    path: 'lien-he'
+    path: '/lien-he'
   },
 ]
 

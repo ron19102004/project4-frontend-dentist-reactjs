@@ -52,10 +52,16 @@ async function getById(id: number): Promise<IResponseLayout<Specialize>> {
     const res = await axios.get<IResponseLayout<Specialize>>(URL)
     return res.data
 }
+async function getBySlug(slug:string): Promise<IResponseLayout<Specialize>> {
+    const URL = SPECIALIZE_URL_BASE + "/slug/" + slug;
+    const res = await axios.get<IResponseLayout<Specialize>>(URL)
+    return res.data
+}
 export default {
     create,
     getAll,
     del,
     update,
-    getById
+    getById,
+    getBySlug
 }
